@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../js/jquery-1.9.0.min.js"></script>
+    <!--<script src="../js/template.js"></script>-->
+    <style>
+        .fs-wrap {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .fs-label-wrap {
+            position: relative;
+            border: 1px solid #ccc;
+            cursor: default;
+        }
+
+        .fs-label-wrap,
+        .fs-dropdown {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .fs-label-wrap .fs-label {
+            padding: 4px 22px 4px 8px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .fs-arrow {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #000;
+            position: absolute;
+            top: 0;
+            right: 5px;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .fs-dropdown {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .fs-dropdown .fs-options {
+            max-height: 200px;
+            overflow: auto;
+        }
+
+        .fs-search input {
+            width: 100%;
+            padding: 2px 4px;
+            border: 0;
+        }
+
+        .fs-option,
+        .fs-search,
+        .fs-optgroup-label {
+            padding: 6px 8px;
+            border-bottom: 1px solid #eee;
+            cursor: default;
+        }
+
+        .fs-option {
+            cursor: pointer;
+        }
+
+        .fs-option.hl {
+            background-color: #f5f5f5;
+        }
+
+        .fs-wrap.multiple .fs-option {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .fs-wrap.multiple .fs-checkbox {
+            position: absolute;
+            display: block;
+            width: 30px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+
+        .fs-wrap.multiple .fs-option .fs-checkbox i {
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #aeaeae;
+            border-radius: 2px;
+            background-color: #fff;
+        }
+
+        .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
+            background-color: rgb(17, 169, 17);
+            border-color: transparent;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .fs-wrap .fs-option:hover {
+            background-color: #f5f5f5;
+        }
+
+        .fs-optgroup-label {
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<img src="https://sc01.alicdn.com/kf/HTB1N553hbZnBKNjSZFr761RLFXat.png" alt="999999999999">
+<div id="main_demo">
+    <div class="container">
+        <div class="fs-wrap multiple">
+            <div class="fs-dropdown hidden">
+                <div class="fs-search"><input type="search" placeholder="Search"></div>
+                <div class="fs-options">
+                    <div class="fs-optgroup">
+                        <div class="fs-optgroup-label">Languages</div>
+                        <div class="fs-option" data-value="cp" data-index="0"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">C++</div>
+                        </div>
+                        <div class="fs-option" data-value="cs" data-index="1"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">C#</div>
+                        </div>
+                        <div class="fs-option" data-value="oc" data-index="2"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">Object C</div>
+                        </div>
+                        <div class="fs-option" data-value="c" data-index="3"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">C</div>
+                        </div>
+                    </div>
+                    <div class="fs-optgroup">
+                        <div class="fs-optgroup-label">Scripts</div>
+                        <div class="fs-option" data-value="js" data-index="4"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">JavaScript</div>
+                        </div>
+                        <div class="fs-option" data-value="php" data-index="5"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">PHP</div>
+                        </div>
+                        <div class="fs-option" data-value="asp" data-index="6"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">ASP</div>
+                        </div>
+                        <div class="fs-option" data-value="jsp" data-index="7"><span class="fs-checkbox"><i></i></span>
+                            <div class="fs-option-label">JSP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <select class="demo hidden" multiple="multiple">
+                <optgroup label="Languages">
+                    <option value="cp">C++</option>
+                    <option value="cs">C#</option>
+                    <option value="oc">Object C</option>
+                    <option value="c">C</option>
+                </optgroup>
+            </select>
+        </div>
+    <script type="text/javascript">
+        (function($) {
+
+            $.fn.fSelect = function(options) {
+
+                if (typeof options == 'string' ) {
+                    var settings = options;
+                }
+                else {
+                    var settings = $.extend({
+                        placeholder: 'Select some options',
+                        numDisplayed: 3,
+                        overflowText: '{n} selected',
+                        searchText: 'Search',
+                        showSearch: true
+                    }, options);
+                }
+
+
+                /**
+                 * Constructor
+                 */
+                function fSelect(select, settings) {
+                    this.$select = $(select);
+                    this.settings = settings;
+                    this.create();
+                }
+
+
+                /**
+                 * Prototype class
+                 */
+                fSelect.prototype = {
+                    create: function() {
+                        var multiple = this.$select.is('[multiple]') ? ' multiple' : '';
+                        this.$select.wrap('<div class="fs-wrap' + multiple + '"></div>');
+                        this.$select.before('<div class="fs-label-wrap"><div class="fs-label">' + this.settings.placeholder + '</div><span class="fs-arrow"></span></div>');
+                        this.$select.before('<div class="fs-dropdown hidden"><div class="fs-options"></div></div>');
+                        this.$select.addClass('hidden');
+                        this.$wrap = this.$select.closest('.fs-wrap');
+                        this.reload();
+                    },
+
+                    reload: function() {
+                        if (this.settings.showSearch) {
+                            var search = '<div class="fs-search"><input type="search" placeholder="' + this.settings.searchText + '" /></div>';
+                            this.$wrap.find('.fs-dropdown').prepend(search);
+                        }
+                        var choices = this.buildOptions(this.$select);
+                        this.$wrap.find('.fs-options').html(choices);
+                        this.reloadDropdownLabel();
+                    },
+
+                    destroy: function() {
+                        this.$wrap.find('.fs-label-wrap').remove();
+                        this.$wrap.find('.fs-dropdown').remove();
+                        this.$select.unwrap().removeClass('hidden');
+                    },
+
+                    buildOptions: function($element) {
+                        var $this = this;
+
+                        var choices = '';
+                        $element.children().each(function(i, el) {
+                            var $el = $(el);
+
+                            if ('optgroup' == $el.prop('nodeName').toLowerCase()) {
+                                choices += '<div class="fs-optgroup">';
+                                choices += '<div class="fs-optgroup-label">' + $el.prop('label') + '</div>';
+                                choices += $this.buildOptions($el);
+                                choices += '</div>';
+                            }
+                            else {
+                                var selected = $el.is('[selected]') ? ' selected' : '';
+                                choices += '<div class="fs-option' + selected + '" data-value="' + $el.prop('value') + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                            }
+                        });
+
+                        return choices;
+                    },
+
+                    reloadDropdownLabel: function() {
+                        var settings = this.settings;
+                        var labelText = [];
+
+                        this.$wrap.find('.fs-option.selected').each(function(i, el) {
+                            labelText.push($(el).find('.fs-option-label').text());
+                        });
+
+                        if (labelText.length < 1) {
+                            labelText = settings.placeholder;
+                        }
+                        else if (labelText.length > settings.numDisplayed) {
+                            labelText = settings.overflowText.replace('{n}', labelText.length);
+                        }
+                        else {
+                            labelText = labelText.join(', ');
+                        }
+
+                        this.$wrap.find('.fs-label').html(labelText);
+                        this.$select.change();
+                    }
+                }
+
+
+                /**
+                 * Loop through each matching element
+                 */
+                return this.each(function() {
+                    var data = $(this).data('fSelect');
+
+                    if (!data) {
+                        data = new fSelect(this, settings);
+                        $(this).data('fSelect', data);
+                    }
+
+                    if (typeof settings == 'string') {
+                        data[settings]();
+                    }
+                });
+            }
+
+
+            /**
+             * Events
+             */
+            window.fSelect = {
+                'active': null,
+                'idx': -1
+            };
+
+            function setIndexes($wrap) {
+                $wrap.find('.fs-option:not(.hidden)').each(function(i, el) {
+                    $(el).attr('data-index', i);
+                    $wrap.find('.fs-option').removeClass('hl');
+                });
+                $wrap.find('.fs-search input').focus();
+                window.fSelect.idx = -1;
+            }
+
+            function setScroll($wrap) {
+                var $container = $wrap.find('.fs-options');
+                var $selected = $wrap.find('.fs-option.hl');
+
+                var itemMin = $selected.offset().top + $container.scrollTop();
+                var itemMax = itemMin + $selected.outerHeight();
+                var containerMin = $container.offset().top + $container.scrollTop();
+                var containerMax = containerMin + $container.outerHeight();
+
+                if (itemMax > containerMax) { // scroll down
+                    var to = $container.scrollTop() + itemMax - containerMax;
+                    $container.scrollTop(to);
+                }
+                else if (itemMin < containerMin) { // scroll up
+                    var to = $container.scrollTop() - containerMin - itemMin;
+                    $container.scrollTop(to);
+                }
+            }
+
+            $(document).on('click', '.fs-option', function() {
+                var $wrap = $(this).closest('.fs-wrap');
+
+                if ($wrap.hasClass('multiple')) {
+                    var selected = [];
+
+                    $(this).toggleClass('selected');
+                    $wrap.find('.fs-option.selected').each(function(i, el) {
+                        selected.push($(el).attr('data-value'));
+                    });
+                }
+                else {
+                    var selected = $(this).attr('data-value');
+                    $wrap.find('.fs-option').removeClass('selected');
+                    $(this).addClass('selected');
+                    $wrap.find('.fs-dropdown').hide();
+                }
+
+                $wrap.find('select').val(selected);
+                $wrap.find('select').fSelect('reloadDropdownLabel');
+            });
+
+            $(document).on('keyup', '.fs-search input', function(e) {
+                if (40 == e.which) {
+                    $(this).blur();
+                    return;
+                }
+
+                var $wrap = $(this).closest('.fs-wrap');
+                var keywords = $(this).val();
+
+                $wrap.find('.fs-option, .fs-optgroup-label').removeClass('hidden');
+
+                if ('' != keywords) {
+                    $wrap.find('.fs-option').each(function() {
+                        var regex = new RegExp(keywords, 'gi');
+                        if (null === $(this).find('.fs-option-label').text().match(regex)) {
+                            $(this).addClass('hidden');
+                        }
+                    });
+
+                    $wrap.find('.fs-optgroup-label').each(function() {
+                        var num_visible = $(this).closest('.fs-optgroup').find('.fs-option:not(.hidden)').length;
+                        if (num_visible < 1) {
+                            $(this).addClass('hidden');
+                        }
+                    });
+                }
+
+                setIndexes($wrap);
+            });
+
+            $(document).on('click', function(e) {
+                var $el = $(e.target);
+                var $wrap = $el.closest('.fs-wrap');
+
+                if (0 < $wrap.length) {
+                    if ($el.hasClass('fs-label')) {
+                        window.fSelect.active = $wrap;
+                        var is_hidden = $wrap.find('.fs-dropdown').hasClass('hidden');
+                        $('.fs-dropdown').addClass('hidden');
+
+                        if (is_hidden) {
+                            $wrap.find('.fs-dropdown').removeClass('hidden');
+                        }
+                        else {
+                            $wrap.find('.fs-dropdown').addClass('hidden');
+                        }
+
+                        setIndexes($wrap);
+                    }
+                }
+                else {
+                    $('.fs-dropdown').addClass('hidden');
+                    window.fSelect.active = null;
+                }
+            });
+
+            $(document).on('keydown', function(e) {
+                var $wrap = window.fSelect.active;
+
+                if (null === $wrap) {
+                    return;
+                }
+                else if (38 == e.which) { // up
+                    e.preventDefault();
+
+                    $wrap.find('.fs-option').removeClass('hl');
+
+                    if (window.fSelect.idx > 0) {
+                        window.fSelect.idx--;
+                        $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']').addClass('hl');
+                        setScroll($wrap);
+                    }
+                    else {
+                        window.fSelect.idx = -1;
+                        $wrap.find('.fs-search input').focus();
+                    }
+                }
+                else if (40 == e.which) { // down
+                    e.preventDefault();
+
+                    var last_index = $wrap.find('.fs-option:last').attr('data-index');
+                    if (window.fSelect.idx < parseInt(last_index)) {
+                        window.fSelect.idx++;
+                        $wrap.find('.fs-option').removeClass('hl');
+                        $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']').addClass('hl');
+                        setScroll($wrap);
+                    }
+                }
+                else if (32 == e.which || 13 == e.which) { // space, enter
+                    $wrap.find('.fs-option.hl').click();
+                }
+                else if (27 == e.which) { // esc
+                    $('.fs-dropdown').addClass('hidden');
+                    window.fSelect.active = null;
+                }
+            });
+
+        })($);
+    </script>
+    <script>
+        $(function () {
+            $('.demo').fSelect();
+        });
+    </script>
+</body>
+
+</html>
+

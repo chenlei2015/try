@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../js/jquery-1.9.0.min.js"></script>
+    <!--<script src="../js/2.js"></script>-->
+</head>
+<body>
+<div id="test">5555</div>
+<!--<div id="load">window对象上挂载新对象</div>-->
+<script>
+    //动态加载2.js
+//   $.getScript('../js/2.js',function () {
+//           alert(call.data);
+//   })
+</script>
+<script>
+    var dd=56;
+    $("#test").click(function () {
+         $.ajax({
+             type: "POST",
+             url:'http://study.dfs.com/call/member/info',
+             dataType:'json',
+             headers:{
+                 'Content-Type':'application/json;charset=utf8',
+                 //'Origin':'https://xxx.qiyukf.com',
+                 //'Access-Control-Request-Method':'POST,GET,OPTIONS',
+                 'Access-Control-Request-Headers':'origin,x-csrftoken,content-type,accept,x-auth-code,X-App-Id,X-Token'
+             },
+             data:{'id':999,'name':'liwang'},
+             success:function (data) {
+                  console.log(data);
+             }
+        })
+    })
+
+//    $("#load").click(function () {
+//        call.b(55);
+//    })
+</script>
+</body>
+</html>
