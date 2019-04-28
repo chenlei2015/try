@@ -1,4 +1,4 @@
-<?php
+ <?php
 //配置数据
 $appKey = "66fd1b23a8faa74e9e24bf56f6e4a744";
 $appSecret = "BDF63451D04C451BB669D5AEF570190F";
@@ -107,7 +107,7 @@ function requestByCurl($url){
     $ch=curl_init();
     curl_setopt_array($ch,[
         CURLOPT_URL =>$url,    //请求的url
-        CURLOPT_RETURNTRANSFER =>1,  //不要把请求的结果直接输出到浏览器
+        CURLOPT_RETURNTRANSFER =>1,  //不要把请求的结果直接输出到屏幕上
         CURLOPT_TIMEOUT =>30,        //请求超时设置
         CURLOPT_POST =>1,            //使用post请求此url
         CURLOPT_SSL_VERIFYPEER=>0,   //服务端不验证ssl证书

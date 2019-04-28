@@ -1,5 +1,5 @@
 <?php
-include'./sphinxapi.php'; //包含sphinxapi类
+include './sphinxapi.php'; //包含sphinxapi类
 $sphinx= new SphinxClient(); //实例化
 $sphinx->SetServer('localhost',9312);//链接
 $sphinx->setFilter('is_delete',[0]);
