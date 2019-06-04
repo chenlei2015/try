@@ -1,4 +1,5 @@
 <?php
+var_dump(json_decode(false,true));die;
 phpinfo();die;
 ini_set('display_errors','on');
 error_reporting(-1);
