@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MimvpInfo>
+	<user xing="chen" ming="lei">月光光abcd</user>
+	<pvs>888888</pvs>
+	<date>2016-08-29</date>
+	<info xing="chen" ming="lei">
+		<age>10</age>
+		<sex>man</sex>
+		<hobby define="自定义">
+			<read>xiyouji</read>
+			<music>tiantang</music>
+		</hobby>
+	</info>
+</MimvpInfo>

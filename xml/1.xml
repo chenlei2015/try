@@ -1,0 +1,66 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Body>
+        <GetSellerInformationResponse xmlns="http://www.cdiscount.com">
+            <GetSellerInformationResult xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                <ErrorMessage xmlns="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages"/>
+                <OperationSuccess xmlns="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages">true</OperationSuccess>
+                <ErrorList/>
+                <SellerLogin>1buycart-api</SellerLogin>
+                <TokenId>da6ad1e8623445a088fe097110b89f41</TokenId>
+                <DeliveryModes>
+                    <DeliveryModeInformation>
+                        <Code>STD</Code>
+                        <Name>Envoi Standard</Name>
+                    </DeliveryModeInformation>
+                    <DeliveryModeInformation>
+                        <Code>TRK</Code>
+                        <Name>Envoi Suivi</Name>
+                    </DeliveryModeInformation>
+                    <DeliveryModeInformation>
+                        <Code>REG</Code>
+                        <Name>Recommandé</Name>
+                    </DeliveryModeInformation>
+                    <DeliveryModeInformation>
+                        <Code>FST</Code>
+                        <Name>Rapide</Name>
+                    </DeliveryModeInformation>
+                </DeliveryModes>
+                <OfferPoolList>
+                    <OfferPool>
+                        <Description>Cdiscount</Description>
+                        <Id>1</Id>
+                    </OfferPool>
+                </OfferPoolList>
+                <Seller>
+                    <Email>onebuycart@163.com</Email>
+                    <IsAvailable>ActiveSeller</IsAvailable>
+                    <Login>1buycart</Login>
+                    <MobileNumber>15629010798</MobileNumber>
+                    <PhoneNumber>15629010798</PhoneNumber>
+                    <SellerAddress>
+                        <Address1>Rm 268, 2nd Fl, Bld B, Qinghu Technology Park, Longhua</Address1>
+                        <Address2 i:nil="true"/>
+                        <ApartmentNumber i:nil="true"/>
+                        <Building i:nil="true"/>
+                        <City>Shenzhen</City>
+                        <Civility>None</Civility>
+                        <CompanyName i:nil="true"/>
+                        <Country>CHINA</Country>
+                        <County i:nil="true"/>
+                        <FirstName i:nil="true"/>
+                        <Instructions i:nil="true"/>
+                        <LastName i:nil="true"/>
+                        <PlaceName i:nil="true"/>
+                        <RelayId i:nil="true"/>
+                        <Street i:nil="true"/>
+                        <ZipCode>518000</ZipCode>
+                    </SellerAddress>
+                    <ShopName>1buycart</ShopName>
+                    <ShopUrl i:nil="true"/>
+                    <SiretNumber>914403005840583015</SiretNumber>
+                    <State>Activated</State>
+                </Seller>
+            </GetSellerInformationResult>
+        </GetSellerInformationResponse>
+    </s:Body>
+</s:Envelope>
