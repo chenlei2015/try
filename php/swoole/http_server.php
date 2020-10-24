@@ -11,7 +11,7 @@ $http->on('request', function ($request, $response) {
 $http->start();
 
 
-
+//http://127.0.0.1:9503/?aa=55
 
 //telnet 模仿 http协议的get请求
 //GET /php/swoole/http_server.php?name=test1&pwd=123456 HTTP/1.1

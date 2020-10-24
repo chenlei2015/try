@@ -5,7 +5,6 @@
  * Date: 2019/7/31
  * Time: 18:51
  */
-
 class Curl
 {
     /**
@@ -37,8 +36,8 @@ class Curl
      * @param $url
      * @return mixed|string
      */
-    function requestByCurlPost($url){
-        $ch=curl_init();
+    function requestByCurlPost($url,$params){
+        $ch = curl_init();
         curl_setopt_array($ch,[
             CURLOPT_URL =>$url,    //请求的url
             CURLOPT_RETURNTRANSFER =>1,  //不要把请求的结果直接输出到屏幕上
@@ -46,9 +45,10 @@ class Curl
             CURLOPT_POST =>1,            //使用post请求此url
             CURLOPT_SSL_VERIFYPEER=>0,   //服务端不验证ssl证书
             CURLOPT_SSL_VERIFYHOST=>0,   //服务端不验证ssl证书
-            CURLOPT_HTTPPROXYTUNNEL=>1,  //启用时会通过HTTP代理来传输
+            CURLOPT_HTTPPROXYTUNNEL=>0,  //启用时会通过HTTP代理来传输
             CURLOPT_HTTPHEADER =>['content-type: application/json'],//请求头部设置
-            CURLOPT_POSTFIELDS =>json_encode(['uid'=>'227899','msgType'=>'TEXT','content'=>'888888888888888'],JSON_UNESCAPED_UNICODE), //post请求时传递的参数
+            //CURLOPT_POSTFIELDS =>json_encode(['uid'=>'227899','msgType'=>'TEXT','content'=>'888888888888888'],JSON_UNESCAPED_UNICODE), //post请求时传递的参数
+            CURLOPT_POSTFIELDS =>json_encode($params,JSON_UNESCAPED_UNICODE), //post请求时传递的参数
         ]);
 
         $content = curl_exec($ch);  //执行
@@ -71,6 +71,7 @@ class Curl
             CURLOPT_SSL_VERIFYPEER=>0,   //服务端不验证ssl证书
             CURLOPT_SSL_VERIFYHOST=>0,   //服务端不验证ssl证书
             CURLOPT_HTTPPROXYTUNNEL=>1,  //启用时会通过HTTP代理来传输
+            //CURLOPT_NOBODY=>1,  //启用时会通过HTTP代理来传输
             //CURLOPT_HTTPHEADER =>['Content-type:text/html;charset=utf-8'],//请求头部设置
         ]);
         $content = curl_exec($ch);  //执行
@@ -81,6 +82,70 @@ class Curl
         }
         return $content;
     }
+
+    /**
+     * 模拟表单提交及Json提交
+     * @param $url
+     * @param array $data
+     * @param bool $isJson
+     * @param array $headers
+     * @param int $timeout
+     * @return bool|string
+     */
+    function post($url, $data = [], $isJson = true,  $headers = [], $timeout = 10)
+    {
+        if ($isJson) {
+            $headers['Content-Type'] = 'application/json';
+            $postFields = json_encode($data);
+        } else {
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            $postFields = http_build_query($data);
+        }
+
+        $headers = $this->formatHeader($headers);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        //设定请求后返回结果
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //忽略证书
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+        // 忽略返回的header头信息
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        // 请求头信息
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // 设置超时时间
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        //模仿浏览器发出的请求 可以解决跨域问题 尤其当返回字符串为空时
+        curl_setopt($ch, CURLOPT_USERAGENT, "mozilla/5.0 (ipad; cpu os 7_0_4 like mac os x) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11b554a safari/9537.53");
+        $response = curl_exec($ch);
+        var_dump($response);die;
+        $curlInfo = curl_getinfo($ch);
+        curl_close($ch);
+        return $response;
+    }
+
+    /**
+     * 对header信息进行格式化处理
+     * @param $headers
+     * @return array
+     */
+    public function formatHeader($headers)
+    {
+        if (empty($headers)) return [];
+
+        $result = [];
+        foreach ($headers as $key => $value) {
+            $result[] = "$key:$value";
+        }
+
+        return $result;
+    }
+
 
 
     /*
@@ -100,7 +165,7 @@ class Curl
             curl_setopt($handles[$key], CURLOPT_HEADER, 0);
             //exec返回结果而不是输出,用于赋值
             curl_setopt($handles[$key], CURLOPT_RETURNTRANSFER, 1);
-            //            curl_setopt($handles[$key], CURLOPT_TIMEOUT, 10);
+            //curl_setopt($handles[$key], CURLOPT_TIMEOUT, 10);
             //决定exec输出顺序
             curl_multi_add_handle($mh, $handles[$key]);
         }

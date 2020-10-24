@@ -10,8 +10,8 @@ class mysql {
         'host' => '127.0.0.1',
         'port' => 3306,
         'user' => 'root',
-        'password' => 'yc_dfs168',
-        'database' => 'dfs_edu',
+        'password' => 'yibai_14485',
+        'database' => 'ecp_stock',
         'charset' => 'utf8', //指定字符集
         'timeout' => 2,  // 可选：连
     ];
@@ -28,14 +28,12 @@ class mysql {
         $this->source->connect($this->config, function ($db,$result){
 
             if(!$result){
-
                 var_dump($db->connect_errno, $db->connect_error);die;
             }
 
-            $sql= "select * from crm_admin where id = 1";
+            $sql= "select * from ecp_stock where id = 1";
 
             $db->query($sql,function ($link,$result){
-
                 if($result === false){
                     var_dump($link->error,$link->errno);die;
                 }elseif($result === true){  //增删改

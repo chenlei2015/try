@@ -1,4 +1,5 @@
 <?php
+$operate_obj='';
 return array(
     'category_path' => '2220->2265->2267',
     'product_category_id' => '2267',

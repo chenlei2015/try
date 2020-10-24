@@ -1,8 +1,8 @@
 <?php
 require 'Curl.php';
 $curl = new Curl();
-$url = "http://hq.sinajs.cn/list=sh513050";
-//$url = "http://192.168.71.170:90/product/product_display/get_collect_info?spu=27101900001";
+$url = "http://hq.sinajs.cn/list=sh519096";
+$url = "http://www.tms-b.com/tracksys/logistics/logisticsPullConfig/index?__withList=logisticsList&page_size=1&page=1";
 $result = $curl->requestByCurlGet($url);
 
 print_r($result);die;

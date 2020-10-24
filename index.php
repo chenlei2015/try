@@ -1,4 +1,19 @@
 <?php
-header("content-type:text/html;charset=utf-8");
-$order = "C:\Users\Yibai\AppData\Local\Programs\Python\Python37\python.exe ".getcwd()."\python\\test.py";
-shell_exec($order);
+function test(){
+    $pid = pcntl_fork();
+    $n = "start559954";
+    if($pid ==-1 ){
+        die();
+    }elseif ($pid){
+        sleep(5);
+        file_put_contents('./f_pid.txt', microtime().PHP_EOL,FILE_APPEND);
+        die();
+    }else{
+        sleep(10);
+        file_put_contents('./s_pid.txt', microtime().PHP_EOL,FILE_APPEND);
+    }
+    pcntl_waitpid($pid);
+
+}
+
+echo  test();

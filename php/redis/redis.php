@@ -5,18 +5,28 @@
  * Date: 12/03/19
  * Time: 下午 11:15
  */
+require_once "redisClient.php";
 
-$redis =new Redis();
+$redis = new redisClient();
+//例子（1）
+$redis->redis->set('set mian','pp');
+var_dump($redis->redis->getLastError());
+//echo $redis->redis->get('mian');
 
-$redis->connect('127.0.0.1',6379);
 
-$redis->set('mian',"kkkk");
+//例子（2）
+//$command = "redis.call('set','key_1',55);redis.call('set','key_2',66); return 'succ';" ;
+//$redis->eval_command($command);
 
-echo $redis->get('ten');
-echo $redis->get('name');
-echo $redis->get('wife');
-echo $redis->get('mian');
 
-//$redis->del('age');
 
-$redis->close();
+//例子（3）
+//$command = "redis.call('set',KEYS[1],ARGV[1]);redis.call('set',KEYS[2],ARGV[2]); return 'succ';";
+//$value = ['key_1','key_2',88,99];
+//$key_num =2;
+//$redis->eval_command($command,$value,$key_num);
+//var_dump($redis->redis->getLastError()); //获取执行原因错误
+
+
+
+

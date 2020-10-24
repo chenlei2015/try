@@ -1,13 +1,23 @@
 <?php
 class RabbitMQ{
     //消息队列服务器配置
+//    private static $config =array(
+//        'host' => '192.168.71.192',
+//        'port' =>  5672,
+//        'login' => 'mquser',
+//        'password' => 'mq2019***',
+//        //'vhost' => '/'
+//    );
+
+    //本地测试配置
     private static $config =array(
-        'host' => '192.168.71.192',
+        'host' => '127.0.0.1',
         'port' =>  5672,
-        'login' => 'mquser',
-        'password' => 'mq2019***',
-        //'vhost' => '/'
+        'login' => 'mandelay',
+        'password' => '2018***',
+        'vhost' => 'test_host'
     );
+
     //MQ连接对象
     private static $rabbitClient = null;
     public function __construct()
@@ -60,13 +70,14 @@ class RabbitMQ{
             $queue->setName($queue_name);                       // 队列名称
             $queue->setFlags(AMQP_DURABLE);               // 持久化 即使重启数据依旧存在
             $queue->declareQueue();                             // 声明此队列
+
+            //第四部将队列、交换机、rounting-key 三者绑定
             $queue->bind($exchange_name, $key);                 // 将队列、交换机、rounting-key 三者绑定
 
-            //第四部将消息存入队列
+            //第五部将消息存入队列
             if (is_array($message) || is_object($message)) {    // 存入的消息数据一定是字符串
                 $message = json_encode($message);
             }
-
             $result = $exchange->publish($message,$key);         //发送消息数据到队列
             if(!$result){
                 throw new Exception('发送MQ消息失败');
@@ -114,14 +125,13 @@ class RabbitMQ{
                 if(!is_null($reMsg)){
                     $msg = $reMsg;
                 }
-
                 $result = call_user_func ( $callback, $msg );
                 if ($result) {
-                    $queue->ack ($envelope->getDeliveryTag ());                //消息确认 手动确认已收到消息，并把消息从队列中移除
+                    $queue->ack ($envelope->getDeliveryTag ());                //消息确认 自动发送ack确认(AMQP_AUTOACK) 确认已收到消息，并把消息从队列中移除
                 }else{
-                    //nack调用测试后，发现还是删除数据了，如果什么也不返回也不处理，数据会塞回队列,
-                    //(但是会塞回队列的前面，不会放到后面，如果当前消费者线程没有关闭，那么那些未处理的数据谁也拿不到，包过当前消费者)
-                    $queue->nack($envelope->getDeliveryTag());
+                    //nack调用测试
+                    $queue->nack($envelope->getDeliveryTag());  //默认是不传递第二个参数（AMQP_NOPARAM）,此种情况下 消息从队列中删除,不会重新赛回队列
+                    //$queue->nack($envelope->getDeliveryTag(), // AMQP_REQUEUE);传递第二个参数（AMQP_REQUEUE） 消息数据会重新赛回队列的最前面 此时获取的一直是这条消息,那些未处理的数据谁也拿不到，包括当前消费者
                 }
             });
 

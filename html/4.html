@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="../js/jquery-1.9.0.min.js"></script>
 </head>
 <body>
 <table>
@@ -10,5 +11,30 @@
     <tr><td>英文：</td><td></td></tr>
     <tr><td>刊登：</td><td></td></tr>
 </table>
+<div onclick="showTrackingDeail()"> showTrackingDeail</div>
+<!--<form class="form">
+    <div class="input-group" style="margin-top: 100px;">
+        <input type="text" class="form-control" placeholder="最多可同时查询10个运单号码，请以英文逗号、分号、空格、换行隔开。" id="tracking_number"  name="tracking_number"  value="">
+        <div class="input-group-append" >
+            <span class="input-group-text" id="sureSend" style="background-color: #17a2b8;color: #fff;border:2px #17a2b8 solid;cursor: pointer">物流订单查询</span>
+        </div>
+    </div>
+    <input type="hidden" name="q" value="admin/main/index/queryShippingInfo">
+</form>-->
 </body>
 </html>
+
+<script>
+    function showTrackingDeail() {
+        alert(222);
+        var requestUrl = 'https://www.vovalogistics.com/index.php?q=admin/main/index/detail';
+        var trackingNumber  = "VO0000718753VA";
+        $.post(requestUrl, {trackingNumber: trackingNumber}, function (data) {
+            if (data.code == 200) {
+                alert(data.data.tracking);
+            } else {
+               alert(55)
+            }
+        })
+    }
+</script>
