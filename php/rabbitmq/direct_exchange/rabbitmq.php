@@ -32,7 +32,7 @@ class RabbitMQ{
     }
 
     /**
-     *  说明不需要以守护进程的方式在服务端运行
+     *  说明 不需要以守护进程的方式在服务端运行
      *  发送消息 生产者
      * @param string $message 要发送的信息
      * @param string $queue_name 队列名称
@@ -59,11 +59,11 @@ class RabbitMQ{
             $channel = new AMQPChannel(self::$rabbitClient);
 
             //第二步根据信号通道创建交换机
-            $exchange = new AMQPExchange($channel);                   // 创建交换机
-            $exchange->setName($exchange_name);                       // 设置交换机名称
-            $exchange->setType( AMQP_EX_TYPE_DIRECT); // 设置交换机类型
-            $exchange->setFlags(AMQP_DURABLE) ;                //  持久化 即使重启数据依旧存在
-            $exchange->declareExchange();                             // 声明此交换机
+            $exchange = new AMQPExchange($channel);                     // 创建交换机
+            $exchange->setName($exchange_name);                         // 设置交换机名称
+            $exchange->setType( AMQP_EX_TYPE_DIRECT);   // 设置交换机类型
+            $exchange->setFlags(AMQP_DURABLE);                   //  持久化 即使重启数据依旧存在
+            $exchange->declareExchange();                               //  声明此交换机
 
             //第三步 根据信号通道创建队列
             $queue = new AMQPQueue($channel);                   // 创建队列
@@ -71,7 +71,7 @@ class RabbitMQ{
             $queue->setFlags(AMQP_DURABLE);               // 持久化 即使重启数据依旧存在
             $queue->declareQueue();                             // 声明此队列
 
-            //第四部将队列、交换机、rounting-key 三者绑定
+            //第四步将队列、交换机、rounting-key 三者绑定
             $queue->bind($exchange_name, $key);                 // 将队列、交换机、rounting-key 三者绑定
 
             //第五部将消息存入队列
@@ -119,6 +119,7 @@ class RabbitMQ{
             $queue = new AMQPQueue($channel);    // 创建队列
             $queue->setName($queue_name);        // 队列名称
 
+            //消费对列里面的消息
             $queue->consume(function($envelope, $queue) use ($callback){
                 $msg = $envelope->getBody ();               //拿出来的一定是字符串
                 $reMsg = json_decode($msg,true);
@@ -130,8 +131,8 @@ class RabbitMQ{
                     $queue->ack ($envelope->getDeliveryTag ());                //消息确认 自动发送ack确认(AMQP_AUTOACK) 确认已收到消息，并把消息从队列中移除
                 }else{
                     //nack调用测试
-                    $queue->nack($envelope->getDeliveryTag());  //默认是不传递第二个参数（AMQP_NOPARAM）,此种情况下 消息从队列中删除,不会重新赛回队列
-                    //$queue->nack($envelope->getDeliveryTag(), // AMQP_REQUEUE);传递第二个参数（AMQP_REQUEUE） 消息数据会重新赛回队列的最前面 此时获取的一直是这条消息,那些未处理的数据谁也拿不到，包括当前消费者
+                    $queue->nack($envelope->getDeliveryTag());                 //默认是不传递第二个参数（AMQP_NOPARAM）,此种情况下 消息从队列中删除,不会重新赛回队列
+                    //$queue->nack($envelope->getDeliveryTag(), AMQP_REQUEUE); //传递第二个参数（AMQP_REQUEUE） 消息数据会重新赛回队列的最前面 此时获取的一直是这条消息,那些未处理的数据谁也拿不到，包括当前消费者
                 }
             });
 

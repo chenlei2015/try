@@ -2,6 +2,7 @@
 /**
  * 扇形交换机
  * 该模式下的交换机是广播模式, 交换机会向所有绑定的队列分发消息, 不需要设置交换机和队列的 routing key. 即使设置了, 也会被忽略.
+ * Fanout模式下不需要指定routing key
  */
 //www.try.com/php/rabbitmq/default_exchange/product.php
 header('Content-Type: text/html; charset=utf-8');

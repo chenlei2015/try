@@ -1,11 +1,7 @@
 <?php
 /**
  *    www.try.com/php/rabbitmq/header_exchange/product.php
- *    此模式下交换机，在推送消息时, 会根据消息的主题词和队列的主题词决定将消息推送到哪个队列. 交换机只会为 Queue 分发符合其指定的主题的消息。
- *   1.向交换机发送消息时，消息的 routing key 就是主题关键词，主题词不能随意设置，必须由 "." 联结多个主题词 (如：log.error、log.warn) .
- *   2.必须将队列显示的绑定到指定的交换机上.
- *   2.为队列指定队列主题词时，可以使用通配符: "#": 表示 0 或多个主题词; "*": 表示 1 个主题词. 主题词不是指一个字符 是指两个点之间的一个单词  例如 quick.orange.rabbit 有三个主题词
- *
+ *    此模式下，消息的routing key 和队列的 routing key 会被完全忽略，而是在交换机推送消息和队列绑定交换机时, 分别为消息和队列设置 headers 属性, 通过匹配消息和队列的 header 决定消息的分发.
  */
 //www.try.com/php/rabbitmq/default_exchange/product.php
 header('Content-Type: text/html; charset=utf-8');

@@ -1,5 +1,0 @@
-
-{"available_stock":2,"on_way_stock":1,"sku":"JY18009-013","warehouse_code":"CKY_AU","type":"add"}
-{"available_stock":2,"on_way_stock":1,"sku":"JY18009-013","warehouse_code":"CKY_AU","type":"add"}
-{"available_stock":2,"on_way_stock":1,"sku":"JY18009-013","warehouse_code":"CKY_AU","type":"add"}
-{"available_stock":2,"on_way_stock":1,"sku":"JY18009-013","warehouse_code":"CKY_AU","type":"add"}

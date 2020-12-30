@@ -1,3 +1,6 @@
-;(function($){
-    $.fn.extend({'method':function () {}});
+;(function ($) {
+    $.fn.extend({
+        'method': function () {
+        }
+    });
 })(jQuery);

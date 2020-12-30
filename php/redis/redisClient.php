@@ -1,13 +1,15 @@
 <?php
 
-
 class redisClient
 {
     public $redis;
     public function __construct()
     {
         $this->redis = new Redis();//安装PHP的redis C语言扩展  各种操作方法名与redis命令名相同
-        $this->redis->connect('127.0.0.1',6379);
+        //$this->redis->connect('127.0.0.1',6379);
+        $this->redis->connect('192.168.71.141',7001);
+        $this->redis->auth('yis@2019._');
+        $this->redis->select(0);
     }
 
 
@@ -20,6 +22,11 @@ class redisClient
      */
     public function  eval_command($command,$value,$key_num){
         $this->redis->eval($command,$value,$key_num);
+    }
+
+    public function __set($name, $value)
+    {
+        $this->redis->$name();
     }
 
 

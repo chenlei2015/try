@@ -4,7 +4,7 @@
  * 使用默认 Exchange 时，不需要对 Exchange 进行属性设置和声明，也不需要对 Queue 进行显示绑定和设置 routing key。
  * Queue 默认会绑定到默认 Exchange，以及默认 routing key 与 Queue 的名称相同。
  */
-//www.try.com/php/rabbitmq/default_exchange/product.php
+//http://www.try.com/php/rabbitmq/dead_letter_exchange/product.php
 header('Content-Type: text/html; charset=utf-8');
 // 连接设置
 $conConfig = [
